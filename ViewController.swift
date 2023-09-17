@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     @IBAction func submitButton(_ sender: Any) {
          var message = ""
-        var location = cityTextField.text!
+        var location = (cityTextField.text!.replacingOccurrences(of: " ", with: "-"))
         if let url = URL(string: "https://www.weather-forecast.com/locations/" + location + "/forecasts/latest"){
             let request = URLRequest(url: url)
             print(request)
@@ -40,7 +40,7 @@ class ViewController: UIViewController {
                                 let newContentArray = contentArray[1].components(separatedBy: stringSepartator)
                                 if newContentArray.count > 1{
                                     
-                                    message = newContentArray[0]
+                                    message = newContentArray[0].replacingOccurrences(of: "&deg", with:"°" )
                                     print(message)
                                 }
                                 
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
                 }
                 if message == ""
                 {
-                    message = "weather couldnt find for this location, please try again"
+                    message = "Enter a city to find the weather"
                 }
                 DispatchQueue.main.sync(execute: {
                     resultLabel.text = message
